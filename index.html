@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>張晉嘉 - 個人資料</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a23, #1e3a8a);
+            color: #e0f7fa;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+            text-align: center;
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            border: 3px solid #00f7ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #00f7ff;
+        }
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00f7ff;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .intro {
+            font-size: 14px;
+            margin: 0 auto 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+        }
+        .intro.show {
+            max-height: 150px;
+            opacity: 1;
+        }
+        .intro-toggle {
+            background: #00f7ff;
+            border: none;
+            border-radius: 5px;
+            color: #0a0a23;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .intro-toggle:hover {
+            background: #00b7eb;
+        }
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00f7ff;
+            border-radius: 5px;
+            color: #e0f7fa;
+            text-decoration: none;
+            font-size: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00f7ff;
+        }
+        .button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        #enlarged-view {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 35, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #enlarged-view.show {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+        #enlarged-img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+            border: 3px solid #00f7ff;
+            box-shadow: 0 0 20px #00f7ff;
+        }
+        #close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: #00f7ff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s ease;
+        }
+        #close-btn:hover {
+            color: #00b7eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="foto.jpg" alt="Profile Picture" class="profile-img" onclick="toggleEnlargedView()" onerror="this.src='default-profile.png';">
+        <div class="name">張晉嘉</div>
+        <div class="intro" id="intro-text">
+            寫程式、旅遊、手做、Canva製圖權威<b>
+            很高興認識你!
+        </div>
+        <button class="intro-toggle" onclick="toggleIntro()">展開自我介紹</button>
+<a href="https://line.me/ti/p/i_qjR-7L6M" class="button"><img src="LINE.png" alt="YouTube" onerror="this.src='default-icon.png';"> 我的Line</a>
+            <a href="https://www.instagram.com/je._.ffk/" class="button"><img src="instagram.png" alt="Instagram" onerror="this.src='default-icon.png';"> 我的Instagram</a>
+            <a href="https://www.threads.com/@je._.ffk?hl=zh-tw" class="button"><img src="Threads.png" alt="X" onerror="this.src='default-icon.png';"> 我的Threads</a>
+            <a href="https://op.gg/zh-tw/valorant/profile/BXGAM7-5000" class="button"><img src="Valorant.png" alt="YouTube" onerror="this.src='default-icon.png';"> 我的瓦羅蘭</a>
+    </div>
+    <div id="enlarged-view">
+        <button id="close-btn" onclick="toggleEnlargedView()">✖</button>
+        <img src="foto.jpg" alt="Enlarged Profile Picture" id="enlarged-img" onerror="this.src='default-profile.png';">
+    </div>
+
+    <script>
+        function toggleEnlargedView() {
+            const view = document.getElementById('enlarged-view');
+            view.classList.toggle('show');
+        }
+        function toggleIntro() {
+            const intro = document.getElementById('intro-text');
+            const button = document.querySelector('.intro-toggle');
+            intro.classList.toggle('show');
+            button.textContent = intro.classList.contains('show') ? '收起自我介紹' : '展開自我介紹';
+        }
+    </script>
+</body>
+</html>
